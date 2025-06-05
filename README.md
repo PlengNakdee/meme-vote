@@ -1,10 +1,13 @@
 # Meme Vote App
 
-This project was built with **React** and **TailwindCSS**.
+A fun and simple voting app built with **React** and **TailwindCSS**.
 
 ## Features
 
-- Login page. You can use any username and password for login  
-- Vote page  
+- **Login Page**:  
+  Log in with any username and password — no authentication required.
 
-Users can vote for a meme, and the results are visualized as a chart.
+- **Voting Page**:  
+  - View and vote for your favorite memes.  
+  - Memes are sorted by the highest number of votes (most voted shown first).  
+  - Search functionality allows you to quickly find and vote on matching memes.
