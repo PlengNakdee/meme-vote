@@ -1,6 +1,6 @@
 # Meme Vote App
 
-This project was built with **React**.
+This project was built with **React** and **TailwindCSS**.
 
 ## Features
 
