@@ -1,4 +1,16 @@
-import React, { useState } from 'react';
+import React, { Suspense, useState } from 'react';
+
+const MemeCard = React.lazy(() => import('./MemeCard'));
+const LoadingCard = () => (
+    <div className="bg-white rounded-lg shadow-md p-6 h-48 animate-pulse">
+      <div className="h-4 bg-gray-200 rounded w-3/4 mb-4"></div>
+      <div className="h-4 bg-gray-200 rounded w-1/2 mb-8"></div>
+      <div className="flex justify-between items-center">
+        <div className="h-8 bg-gray-200 rounded w-20"></div>
+        <div className="h-4 bg-gray-200 rounded w-12"></div>
+      </div>
+    </div>
+);
 
 const Home = () => {
     const [votes, setVotes] = useState<number[]>([0, 0, 0]);
@@ -19,25 +31,14 @@ const Home = () => {
 
             <div className='rid grid-cols-1 md:grid-cols-2 lg:grid-cols-3'>
                 {memes.map((meme, index) => (
-                    <div key={meme.id} className='bg-white rounded-lg shadow-md p-6 flex flex-col mt-6'>
-                        <div className='flex-1'>
-                            <p className='text-xl font-medium mb-4 text-gray-800'> "{meme.quote}"</p>
-                            <p className='text-gray-600 italic'>- {meme.author}</p>
-                        </div>
-                        <div className='mt-6 flex items-center justify-between'>
-                            <button onClick={() => handleVote(index)} className='bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-md transition-colors duration-200'>
-                                Vote
-                            </button>
-                            <div className="flex items-center gap-2">
-                                <span className="text-gray-600 font-medium">
-                                    {votes[index]}
-                                </span>
-                                <span className="text-gray-500">
-                                    {votes[index] === 1 ? 'vote' : 'votes'}
-                                </span>
-                            </div>
-                        </div>
-                    </div>
+                <Suspense key={meme.id} fallback={<LoadingCard />}>
+                    <MemeCard
+                        quote={meme.quote}
+                        author={meme.author}
+                        votes={votes[index]}
+                        onVote={() => handleVote(index)}
+                    />
+                </Suspense>
                 ))}
             </div>
         </div>
