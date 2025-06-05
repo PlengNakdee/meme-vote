@@ -25,20 +25,27 @@ const Home = () => {
         { id: 2, quote: "Why do programmers prefer dark mode? Because light attracts bugs!", author: "Anonymous Developer" },
         { id: 3, quote: "I don't always test my code, but when I do, I do it in production", author: "The Most Interesting Developer in the World" },
     ]
+
+    const memesWithVotes = memes.map((meme, index) => ({
+        ...meme,
+        votes: votes[index],
+        originalIndex: index
+      })).sort((a, b) => b.votes - a.votes);
+
     return (
         <div className='mx-auto max-w-4xl p-6 bg-gray-50 rounded-lg shadow-md'>
             <h1 className='text-3xl font-bold text-center mb-8'>Developer Meme Quotes</h1>
 
             <div className='rid grid-cols-1 md:grid-cols-2 lg:grid-cols-3'>
-                {memes.map((meme, index) => (
-                <Suspense key={meme.id} fallback={<LoadingCard />}>
-                    <MemeCard
-                        quote={meme.quote}
-                        author={meme.author}
-                        votes={votes[index]}
-                        onVote={() => handleVote(index)}
-                    />
-                </Suspense>
+                {memesWithVotes.map((meme, index) => (
+                    <Suspense key={meme.id} fallback={<LoadingCard />}>
+                        <MemeCard
+                            quote={meme.quote}
+                            author={meme.author}
+                            votes={meme.votes}
+                            onVote={() => handleVote(index)}
+                        />
+                    </Suspense>
                 ))}
             </div>
         </div>
